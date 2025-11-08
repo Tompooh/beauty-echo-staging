@@ -84,6 +84,13 @@ body{
   overflow: clip;                     /* prevents previous/next content bleeding */
 }
 
+/* Allow How It Works to exceed viewport height on shorter displays */
+#how.snap-section{
+  height: auto;           /* grow if content is taller */
+  min-height: 100dvh;     /* but still at least one screen */
+  overflow: visible;      /* prevent clipping of cards */
+}
+
 /* Apply the vertical breathing space to the inner wrap instead of the section */
 .snap-section > .wrap{
   width: 100%;
