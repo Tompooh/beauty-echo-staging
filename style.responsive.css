@@ -314,3 +314,87 @@ h1,h2{margin:0 0 8px} h2{font-size:var(--h2)}
 
 /* Keep everything visible (dev helper) */
 .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+/* ========================== PHONE VERSION OVERRIDES ==========================
+   Goal: minimal changes, clear content on phones, desktop unchanged
+   Trigger: any viewport <= 640px wide
+----------------------------------------------------------------------------- */
+@media (max-width: 640px){
+
+  /* 0) Global scale for comfortable reading */
+  :root{
+    --padX: 18px;
+    --navH: 56px;
+    --sectionPadTop: calc(var(--navH) + 12px);
+    --sectionPadBot: 28px;
+
+    /* smaller, consistent mobile type (overrides desktop vmin scale) */
+    --heroTitle: clamp(28px, 7.2vw, 36px);
+    --heroSub:   clamp(13px, 3.6vw, 15px);
+    --h2:        clamp(18px, 5.6vw, 24px);
+    --body:      clamp(14px, 4vw, 15px);
+
+    --consTitleSize: clamp(22px, 7vw, 28px);
+    --consGap: 16px;
+  }
+
+  /* 1) Phones = normal scroll (no full-screen snap) */
+  .snap-container{ scroll-snap-type: none; }
+  .snap-section{
+    height: auto; min-height: auto;
+    padding: var(--sectionPadTop) var(--padX) var(--sectionPadBot);
+    overflow: visible; display:block;
+  }
+  .snap-section > .wrap{ padding:0; max-width:100%; }
+
+  /* 2) Top nav: simple drawer with big tap targets */
+  .topnav{ backdrop-filter:none; background:#ffffffee; }
+  .nav-toggle{ display:block; padding:10px 12px; font-size:18px; }
+  .nav-links{
+    display:none; position:fixed; left:0; right:0; top:var(--navH);
+    background:#fff; border-top:1px solid var(--line);
+    box-shadow:0 18px 36px rgba(0,0,0,.08);
+    padding:10px 16px 16px; gap:8px; z-index:90;
+  }
+  .nav-links a{ display:block; padding:12px 6px; font-weight:600; color:#111; }
+  .nav-links.open{ display:flex; flex-direction:column; }
+
+  /* 3) Hero: lighter image, centered message, friendly buttons */
+  .hero{ border-bottom:none; }
+  .hero-image-overlay{ opacity:.55; background-position:60% 10%; }
+  .logo-mark{ height:92px; }
+  .brand-title{ margin-top:4px; }
+  .brand-sub{ max-width:90%; margin-bottom:12px; }
+  .ctas{ gap:10px; }
+  .btn{ padding:12px 16px; border-radius:12px; display:inline-block; }
+  .btn.primary, .btn.ghost{ min-width:42%; text-align:center; }  /* easier taps */
+
+  /* 4) “How it Works” → single column cards */
+  .how .section-title{ margin-bottom:6px; text-align:center; }
+  .how .section-kicker{ margin-bottom:14px; text-align:center; }
+  .how .how-grid{ grid-template-columns:1fr; gap:14px; }
+  .how .how-card{ padding:16px 14px; border-radius:16px; box-shadow:0 10px 26px rgba(0,0,0,.05); }
+  .how .how-card .how-img{ height:180px; border-radius:12px; }
+  .how .how-card .desc{ max-width:100%; }
+
+  /* 5) “For Consumers” → one phone per row */
+  #consumers.snap-section{ align-items:initial; }
+  .consumers-grid{ grid-template-columns:1fr; gap:14px; padding:6px var(--padX); }
+  .phone-card{ border-radius:18px; padding:14px; min-height:auto; box-shadow:0 12px 28px rgba(0,0,0,.05); }
+  .phone-img{ height:clamp(320px, 70vw, 420px); border-radius:14px; }
+  .phone-card figcaption{ font-size:13px; min-height:auto; }
+
+  /* 6) “For Brand Managers” → stack rail + device, center headings */
+  .brand{ text-align:left; }
+  .brand .section-head h2, .brand .section-head p{ text-align:center; }
+  .brand-stage{ flex-direction:column; gap:16px; }
+  .left-rail{ max-width:100%; }
+  .left-rail .callout{ font-size:14px; }
+  .brand .device.laptop{ padding:12px; border-radius:18px; }
+  .brand .device.laptop img{ border-radius:12px; }
+
+  /* 7) Final blocks → single column */
+  .final .final-grid{ grid-template-columns:1fr; gap:14px; padding:0; }
+  .final .final-block{ padding:16px; border-radius:14px; box-shadow:0 10px 26px rgba(0,0,0,.05); }
+  .foot{ font-size:12px; margin-top:16px; text-align:center; }
+}
